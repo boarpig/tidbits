@@ -37,22 +37,28 @@ def find_process_by_name(name):
                 and x.isdigit()]
 
     # go through all processes and find plugin containers
+    pid = ""
     for proc in procs:
         path = os.path.join("/proc", proc, "status")
         with open(path) as fd:
             pname = fd.readlines()[0]
             pname = pname.split()[1]
-            if proc.startswith(name):
-                return proc
+            if pname.startswith(name):
+                pid = proc
+                break
+    return pid
 
 pid = find_process_by_name("plugin-conta")
-last_prc = get_jiffies(pid)
-last_cpu = get_cpu_jiffies()
-while 1:
-    sleep(1)
-    new_prc = get_jiffies(pid)
-    new_cpu = get_cpu_jiffies()
-    time = 100 * (new_prc - last_prc) / (new_cpu - last_cpu)
-    print(time)
-    last_prc = new_prc
-    last_cpu = new_cpu
+if pid:
+    last_prc = get_jiffies(pid)
+    last_cpu = get_cpu_jiffies()
+    while 1:
+        sleep(1)
+        new_prc = get_jiffies(pid)
+        new_cpu = get_cpu_jiffies()
+        time = 100 * (new_prc - last_prc) / (new_cpu - last_cpu)
+        print(time)
+        last_prc = new_prc
+        last_cpu = new_cpu
+else:
+    print("no such process")
