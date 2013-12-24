@@ -2,6 +2,7 @@
 #
 # http://stackoverflow.com/questions/1420426/calculating-cpu-usage-of-a-process-in-linux 
 #
+# This code is under public domain
 
 from time import sleep
 import os
