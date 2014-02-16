@@ -1,0 +1,11 @@
+#!/bin/bash
+
+testing_disabled=$(egrep "#\[.*testing\]" /etc/pacman.conf)
+
+if [ ! -z "$testing_disabled" ]; then
+    echo "Enabled testing"
+    sudo sed -ibak '/\[.*testing\]/,+1 s/^#//' /etc/pacman.conf
+else
+    echo "Disabled testing"
+    sudo sed -ibak '/\[.*testing\]/,+1 s/^/#/' /etc/pacman.conf
+fi
