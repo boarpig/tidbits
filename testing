@@ -1,11 +1,14 @@
 #!/bin/bash
+# This script toggles any testing repo in /etc/pacman.conf
+
+# WARNING! won't handle three line repos yet :D
 
 testing_disabled=$(egrep "#\[.*testing\]" /etc/pacman.conf)
 
 if [ ! -z "$testing_disabled" ]; then
-    echo "Enabled testing"
+    echo "Enabled testing repositories"
     sudo sed -ibak '/\[.*testing\]/,+1 s/^#//' /etc/pacman.conf
 else
-    echo "Disabled testing"
+    echo "Disabled testing repositories"
     sudo sed -ibak '/\[.*testing\]/,+1 s/^/#/' /etc/pacman.conf
 fi
