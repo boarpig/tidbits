@@ -3,7 +3,7 @@
 # this script generates few years worth of "fake" backup file names which you
 # can 'touch' into files
 # 
-# for i in "$(fake-backup.py)"; do
+# for i in $(fake-backup.py); do
 # touch "$i"
 # done
 #
